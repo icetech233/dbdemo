@@ -14,8 +14,8 @@ func main() {
 }
 
 var dbMaps = map[string]IDatabase{
-	"mysql": &Mysql{&defaultImpl{}},
-	"pgsql": &Pgsql{&defaultImpl{}},
+	"mysql": Mysql{DefaultImpl: &DefaultImpl{}},
+	"pgsql": Pgsql{DefaultImpl: &DefaultImpl{}},
 }
 
 var (
@@ -24,19 +24,19 @@ var (
 )
 
 type Mysql struct {
-	*defaultImpl
+	*DefaultImpl
 }
 
-func (m *Mysql) Insert(ele any) error {
+func (m Mysql) Insert(ele any) error {
 	fmt.Println("mysql insert")
 	return nil
 }
 
 type Pgsql struct {
-	*defaultImpl
+	*DefaultImpl
 }
 
-func (p *Pgsql) Update(ele any) error {
+func (p Pgsql) Update(ele any) error {
 	fmt.Println("pgsql update")
 	return nil
 }
@@ -47,12 +47,12 @@ type IDatabase interface {
 }
 
 // 默认实现 IDatabase
-type defaultImpl struct{}
+type DefaultImpl struct{}
 
-func (impl *defaultImpl) Insert(ele any) error {
+func (impl DefaultImpl) Insert(ele any) error {
 	panic("未实现")
 }
 
-func (impl *defaultImpl) Update(ele any) error {
+func (impl DefaultImpl) Update(ele any) error {
 	panic("未实现")
 }
